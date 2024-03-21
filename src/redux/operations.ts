@@ -8,12 +8,12 @@ export interface AsyncThunkConfig {
   rejectValue: string;
 }
 
-export const createTaskThunk = createAsyncThunk('createTask', async()=>{})
+export const createTaskThunk = createAsyncThunk <AsyncThunkConfig>('createTask', async ({},thunkApi)=>{try{}catch (){}})
 
-export const removeTaskThunk = createAsyncThunk('removeTask',async()=>{})
+export const removeTaskThunk = createAsyncThunk <string, string, AsyncThunkConfig>('removeTask',async (id, thunkAPI)=>{try{}catch (){}})
 
-export const editTaskThunk = createAsyncThunk('editTask',async()=>{})
+export const editTaskThunk = createAsyncThunk <AsyncThunkConfig>('editTask',async ({}, thunkAPI)=>{try{}catch (){}})
 
-export const getTaskByIdThunk = createAsyncThunk('getTaskById',async()=>{})
+export const getTaskByIdThunk = createAsyncThunk <AsyncThunkConfig>('getTaskById',async (id, thunkAPI)=>{try{}catch (){}})
 
-export const getAllTasksThunk = createAsyncThunk('getAllTasks',async()=>{})
+export const getAllTasksThunk = createAsyncThunk <AsyncThunkConfig>('getAllTasks',async (_, thunkAPI)=>{try{}catch (){}})
