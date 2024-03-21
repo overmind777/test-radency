@@ -1,10 +1,20 @@
 
+import { useEffect } from 'react';
 import Column from './components/Column';
 import Header from './components/Header';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { getAllTasksThunk } from './redux/operations';
+import { AppDispatch } from './redux/store';
 
 function App() {
   const columnArray: string[] = ['To Do', 'Planned', 'In Progress', 'Closed']
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    dispatch(getAllTasksThunk());
+  }, [dispatch])
+  
   return (
     <Wrapper>
         <Header />

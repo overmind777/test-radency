@@ -1,10 +1,11 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios'
-import { AppDispatch, RootState } from './store.ts';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { AppDispatch, RootState } from "./store.ts";
+import { Task } from "./taskSlice.ts";
 
 const taskApi = axios.create({
-  baseURL: 'https://65e468453070132b3b24b3a4.mockapi.io/'
-})
+  baseURL: "https://65e468453070132b3b24b3a4.mockapi.io",
+});
 export interface AsyncThunkConfig {
   state: RootState;
   dispatch: AppDispatch;
@@ -47,13 +48,17 @@ export interface AsyncThunkConfig {
 //   );
 // }})
 
-export const getAllTasksThunk = createAsyncThunk <AsyncThunkConfig>('getAllTasks',async (_, thunkApi)=>{
-  try{
-    const data = await taskApi.get('/')
-    console.log(data)
-    return data
+export const getAllTasksThunk = createAsyncThunk<
+  Task[],
+  void,
+  AsyncThunkConfig
+>("getAllTasks", async (_, thunkApi) => {
+  try {
+    const {data} = await taskApi.get("/tasks/todo");
+    return data;
   } catch (error: unknown) {
-      return thunkApi.rejectWithValue(
-        `${(error as Error)?.message ?? "Unknown error"}`
-      );
-}})
+    return thunkApi.rejectWithValue(
+      `${(error as Error)?.message ?? "Unknown error"}`
+    );
+  }
+});
