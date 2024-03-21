@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: 'test-radency',
   build: {
-    outDir: '../dist'
+    outDir: 'dist'
   }
 })
