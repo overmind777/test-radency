@@ -6,6 +6,6 @@ export default defineConfig({
   base: 'test-radency',
   root: 'src',
   build: {
-    outDir: '../dist'
+    outDir: 'dist'
   }
 })
