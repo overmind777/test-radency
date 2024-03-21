@@ -15,7 +15,7 @@ export interface Task {
   category: string;
 }
 
-export type Tasks = {
+export interface Tasks {
   todo: Task[];
   planned: Task[];
   inProgress: Task[];
