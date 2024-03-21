@@ -17,8 +17,6 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-
-		"outDir": "dist"
 	},
 	"include": ["src", "src/@types/i18n.d.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
