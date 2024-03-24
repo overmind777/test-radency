@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from "./store.ts";
 import { Task } from "./taskSlice.ts";
 
 const taskApi = axios.create({
-  baseURL: "https://65e468453070132b3b24b3a4.mockapi.io",
+  baseURL: "http://127.0.0.1:5001/quiz-49364/us-central1/api",
 });
 export interface AsyncThunkConfig {
   state: RootState;
@@ -54,7 +54,7 @@ export const getAllTasksThunk = createAsyncThunk<
   AsyncThunkConfig
 >("getAllTasks", async (_, thunkApi) => {
   try {
-    const {data} = await taskApi.get("/tasks/todo");
+    const {data} = await taskApi.get("/tasks/");
     return data;
   } catch (error: unknown) {
     return thunkApi.rejectWithValue(

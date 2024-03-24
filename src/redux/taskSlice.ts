@@ -16,17 +16,29 @@ export interface Task {
 }
 
 export interface Tasks {
-  todo: Task[];
-  planned: Task[];
-  inProgress: Task[];
-  closed: Task[];
+  todo: [{name: string, body: Task[] }];
+  planned: [{name: string, body: Task[] }];
+  inProgress: [{name: string, body: Task[] }];
+  closed: [{name: string, body: Task[] }];
 }
 
 const initialState: Tasks = {
-  todo: [],
-  planned: [],
-  inProgress: [],
-  closed: []
+  todo: [{
+    name: '',
+    body: [],
+  }],
+  planned: [{
+    name: '',
+    body: [],
+  }],
+  inProgress: [{
+    name: '',
+    body: [],
+  }],
+  closed: [{
+    name: '',
+    body: [],
+  }],
 }
 
 const taskSlice = createSlice({
@@ -41,13 +53,15 @@ const taskSlice = createSlice({
       // .addCase(editTaskThunk.fulfilled(), (state, {payload})=>{})
       // .addCase(getTaskByIdThunk.fulfilled(), (state, {payload})=>{})
       .addCase(getAllTasksThunk.fulfilled, (state, { payload }) => {
-        state.todo = payload
+        console.log('state',state)
+        console.log('payload',[...payload])
+        // state.todo.name = payload
       })
   }
 })
 
 export const tasksReducer: Reducer<Tasks> = taskSlice.reducer
-export const todoSelector = (state: RootState) => state.tasks.todo
-export const plannedSelector = (state: RootState) => state.tasks.planned;
-export const inProgressSelector = (state: RootState) => state.tasks.inProgress;
-export const closedSelector = (state: RootState) => state.tasks.closed;
+export const tasksSelector = (state: RootState) => state.tasks
+// export const plannedSelector = (state: RootState) => state.tasks.planned;
+// export const inProgressSelector = (state: RootState) => state.tasks.inProgress;
+// export const closedSelector = (state: RootState) => state.tasks.closed;
