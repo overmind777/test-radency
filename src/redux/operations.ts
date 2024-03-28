@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from "./store.ts";
 import { Task } from "./taskSlice.ts";
 
 const taskApi = axios.create({
-  baseURL: "http://127.0.0.1:5001/quiz-49364/us-central1/api",
+  baseURL: "https://nodejs-serverless-function-express-dhh0.onrender.com",
 });
 export interface AsyncThunkConfig {
   state: RootState;
@@ -54,7 +54,8 @@ export const getAllTasksThunk = createAsyncThunk<
   AsyncThunkConfig
 >("getAllTasks", async (_, thunkApi) => {
   try {
-    const {data} = await taskApi.get("/tasks/");
+    const {data} = await taskApi.get("/tasks");
+    console.log(data)
     return data;
   } catch (error: unknown) {
     return thunkApi.rejectWithValue(

@@ -1,19 +1,29 @@
+import { useSelector } from 'react-redux';
+import Item from './Item';
+import { Task, tasksSelector } from '../redux/taskSlice';
+import { useEffect, useState } from 'react';
 
-import { useSelector } from 'react-redux'
-// import Item from './Item'
-import { tasksSelector } from '../redux/taskSlice'
+interface ListItemProps {
+  data: string; // Очікувана категорія завдань
+}
 
-const ListItem = () => {
-  const listTask = useSelector(tasksSelector)
-  console.log('item', listTask)
+const ListItem: React.FC<ListItemProps> = ({ data }) => {
+  const tasks = useSelector(tasksSelector);
+  const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    // Фільтруємо завдання за категорією
+    const filtered = tasks.filter(task => task.category === data.toLowerCase().replace(/\s+/g, ''));
+    setFilteredTasks(filtered);
+  }, [tasks, data]); // Залежності: загальний список завдань і категорія для фільтрації
 
   return (
     <ul>
-      {/*{listTask.map(item => {*/}
-      {/*  return <Item item={ item } />*/}
-      {/* })}*/}
+      {filteredTasks.map((task, index) => (
+        <Item key={index} item={task} />
+      ))}
     </ul>
-  )
-}
+  );
+};
 
-export default ListItem
+export default ListItem;

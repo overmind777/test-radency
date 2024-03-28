@@ -5,12 +5,12 @@ interface ItemProps {
 }
 
 const Item: React.FC<ItemProps> = ({ item }) => {
-  const { title, description, date } = item;
+  const { title, description, importance } = item;
   return (
     <li>
       <p>{title}</p>
       <p>{description}</p>
-      <p>{date}</p>
+      <p>{importance}</p>
     </li>
   );
 };

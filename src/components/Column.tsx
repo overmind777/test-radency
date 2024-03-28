@@ -13,7 +13,7 @@ const Column = ({title}: Text) => {
         <p></p>
       </TitleWrapper>
       <Button>Add new card</Button>
-      <ListItem />
+      <ListItem data={title}/>
     </Item>
   );
 }

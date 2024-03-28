@@ -1,44 +1,27 @@
-import { RootState } from './store';
-import { createSlice, Reducer } from '@reduxjs/toolkit';
+
+import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import {
-  // createTaskThunk,
-  // editTaskThunk,
+//   // createTaskThunk,
+//   // editTaskThunk,
   getAllTasksThunk,
-  // getTaskByIdThunk,
-  // removeTaskThunk
+//   // getTaskByIdThunk,
+//   // removeTaskThunk
 } from './operations.ts';
+import { RootState } from './store.ts';
 
 export interface Task {
   title: string;
-  description: string;
-  date: string;
   category: string;
+  description: string;
+  importance: 'low' | 'medium' | 'high';
 }
 
-export interface Tasks {
-  todo: [{name: string, body: Task[] }];
-  planned: [{name: string, body: Task[] }];
-  inProgress: [{name: string, body: Task[] }];
-  closed: [{name: string, body: Task[] }];
+interface TasksState {
+  tasks: Task[],
 }
 
-const initialState: Tasks = {
-  todo: [{
-    name: '',
-    body: [],
-  }],
-  planned: [{
-    name: '',
-    body: [],
-  }],
-  inProgress: [{
-    name: '',
-    body: [],
-  }],
-  closed: [{
-    name: '',
-    body: [],
-  }],
+const initialState: TasksState = {
+  tasks: []
 }
 
 const taskSlice = createSlice({
@@ -52,16 +35,14 @@ const taskSlice = createSlice({
       // .addCase(removeTaskThunk.fulfilled(), (state, {payload})=>{})
       // .addCase(editTaskThunk.fulfilled(), (state, {payload})=>{})
       // .addCase(getTaskByIdThunk.fulfilled(), (state, {payload})=>{})
-      .addCase(getAllTasksThunk.fulfilled, (state, { payload }) => {
-        console.log('state',state)
-        console.log('payload',[...payload])
-        // state.todo.name = payload
+      .addCase(getAllTasksThunk.fulfilled, (state, action: PayloadAction<Task[]>) => {
+        state.tasks = action.payload || []
       })
   }
 })
 
-export const tasksReducer: Reducer<Tasks> = taskSlice.reducer
-export const tasksSelector = (state: RootState) => state.tasks
+export const tasksReducer: Reducer<TasksState> = taskSlice.reducer
+export const tasksSelector = (state: RootState) => state.tasks.tasks
 // export const plannedSelector = (state: RootState) => state.tasks.planned;
 // export const inProgressSelector = (state: RootState) => state.tasks.inProgress;
 // export const closedSelector = (state: RootState) => state.tasks.closed;
