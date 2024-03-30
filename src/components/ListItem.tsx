@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import Item from './Item';
 import { Task, tasksSelector } from '../redux/taskSlice';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 interface ListItemProps {
   data: string; // Очікувана категорія завдань
@@ -17,13 +18,20 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
     setFilteredTasks(filtered);
   }, [tasks, data]); // Залежності: загальний список завдань і категорія для фільтрації
 
+
   return (
-    <ul>
+    <ListStyled>
       {filteredTasks.map((task, index) => (
         <Item key={index} item={task} />
       ))}
-    </ul>
+    </ListStyled>
   );
 };
 
 export default ListItem;
+
+const ListStyled = styled.ul`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { getAllTasksThunk } from './redux/operations';
 import { AppDispatch } from './redux/store';
+import ModalAddNewTask from './components/modalAddNewTask.tsx';
 
 function App() {
   const columnArray: string[] = ['To Do', 'Planned', 'In Progress', 'Closed']
@@ -23,6 +24,7 @@ function App() {
           return <Column key={idx} title={column}/>
         })}
       </ListsWrapper>
+      <ModalAddNewTask/>
     </Wrapper>
   );
 }
