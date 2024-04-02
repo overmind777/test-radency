@@ -4,19 +4,19 @@ import { Task, tasksSelector } from '../redux/taskSlice';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-interface ListItemProps {
-  data: string; // Очікувана категорія завдань
+type Data = {
+  data: string;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ data }) => {
+const ListItem = ({ title }: Data) => {
   const tasks = useSelector(tasksSelector);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     // Фільтруємо завдання за категорією
-    const filtered = tasks.filter(task => task.category === data.toLowerCase().replace(/\s+/g, ''));
+    const filtered = tasks.filter(task => task.category === title.toLowerCase().replace(/\s+/g, ''));
     setFilteredTasks(filtered);
-  }, [tasks, data]); // Залежності: загальний список завдань і категорія для фільтрації
+  }, [tasks, title]); // Залежності: загальний список завдань і категорія для фільтрації
 
 
   return (

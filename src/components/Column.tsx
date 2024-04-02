@@ -1,20 +1,19 @@
 
 import ListItem from './ListItem';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { modalSelector } from '../redux/taskSlice.ts';
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {modalState } from '../redux/taskSlice.ts';
+import { AppDispatch } from '../redux/store.ts';
 
 type Text = {
-  title: string
+  title: string;
 }
 const Column = ({title}: Text) => {
 
-  const stateModal = useSelector(modalSelector)
-  const [isOpen, setIsOpen] = useState(false)
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleClicedAddNew = ()=>{
-    setIsOpen(true)
+    dispatch(modalState(true))
   }
 
 

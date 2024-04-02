@@ -31,7 +31,11 @@ const initialState: TasksState = {
 const taskSlice = createSlice({
   name: 'tasks',
   initialState,
-  reducers: {},
+  reducers: {
+    modalState:(state, action)=>{
+      state.isOpen = action.payload
+    }
+  },
   extraReducers:
   (builder) => {
     builder
@@ -51,5 +55,6 @@ const taskSlice = createSlice({
 })
 
 export const tasksReducer: Reducer<TasksState> = taskSlice.reducer
+export const {modalState} = taskSlice.actions
 export const tasksSelector = (state: RootState) => state.tasks.tasks
 export const modalSelector = (state: RootState) => state.tasks.isOpen
