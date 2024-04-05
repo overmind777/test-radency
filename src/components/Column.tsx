@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import {modalState } from '../redux/taskSlice.ts';
 import { AppDispatch } from '../redux/store.ts';
+import React from 'react';
 
-type Text = {
+export type Text = {
   title: string;
 }
-const Column = ({title}: Text) => {
+const Column: React.FC<Text> = ({title}: Text) => {
 
   const dispatch = useDispatch<AppDispatch>()
 
@@ -24,7 +25,7 @@ const Column = ({title}: Text) => {
         <p></p>
       </TitleWrapper>
       <Button onClick={handleClicedAddNew}>Add new card</Button>
-      <ListItem data={title}/>
+      <ListItem title={title}/>
     </Item>
   );
 }

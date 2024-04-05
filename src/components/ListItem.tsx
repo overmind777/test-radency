@@ -1,14 +1,13 @@
 import { useSelector } from 'react-redux';
 import Item from './Item';
 import { Task, tasksSelector } from '../redux/taskSlice';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-type Data = {
-  data: string;
+interface Title {
+  title: string;
 }
-
-const ListItem = ({ title }: Data) => {
+const ListItem: React.FC<Title> = ({ title }) => {
   const tasks = useSelector(tasksSelector);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
 
@@ -16,7 +15,8 @@ const ListItem = ({ title }: Data) => {
     // Фільтруємо завдання за категорією
     const filtered = tasks.filter(task => task.category === title.toLowerCase().replace(/\s+/g, ''));
     setFilteredTasks(filtered);
-  }, [tasks, title]); // Залежності: загальний список завдань і категорія для фільтрації
+  }, [tasks]); // Залежності
+
 
 
   return (

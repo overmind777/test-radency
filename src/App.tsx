@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Column from './components/Column';
 import Header from './components/Header';
 import styled from 'styled-components';
@@ -9,11 +9,14 @@ import { AppDispatch } from './redux/store';
 import ModalAddNewTask from './components/modalAddNewTask.tsx';
 import { modalSelector, modalState } from './redux/taskSlice.ts';
 
+export interface ModalInterface {
+  closeModal: ()=> void;
+}
+
 function App() {
   const columnArray: string[] = ['To Do', 'Planned', 'In Progress', 'Closed']
   const dispatch = useDispatch<AppDispatch>()
   const modalStateSelector = useSelector(modalSelector)
-  // const [isOpen, setIsOpen] = useState()
 
   useEffect(() => {
     dispatch(getAllTasksThunk());

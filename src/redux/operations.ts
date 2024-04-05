@@ -5,7 +5,7 @@ import { Task } from "./taskSlice.ts";
 
 const taskApi = axios.create({
   // baseURL: "https://nodejs-serverless-function-express-dhh0.onrender.com",
-  baseURL: "http://192.168.88.102:3000"
+  baseURL: "http://127.0.0.1:3000"
 });
 export interface AsyncThunkConfig {
   state: RootState;
