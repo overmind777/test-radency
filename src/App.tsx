@@ -6,21 +6,21 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTasksThunk } from './redux/operations';
 import { AppDispatch } from './redux/store';
-import ModalAddNewTask from './components/modalAddNewTask.tsx';
-import { modalSelector, modalState } from './redux/taskSlice.ts';
+import ModalNewTask from './components/modalNewTask.tsx';
+import { modalSelector, modalState} from './redux/taskSlice.ts';
 
 export interface ModalInterface {
   closeModal: ()=> void;
 }
 
 function App() {
-  const columnArray: string[] = ['To Do', 'Planned', 'In Progress', 'Closed']
+  const columnArray = ['To Do', 'Planned', 'In Progress', 'Closed']
   const dispatch = useDispatch<AppDispatch>()
   const modalStateSelector = useSelector(modalSelector)
 
+
   useEffect(() => {
     dispatch(getAllTasksThunk());
-
   }, [dispatch])
 
   const closeModal = ()=>{
@@ -31,11 +31,11 @@ function App() {
     <Wrapper>
         <Header />
       <ListsWrapper>
-        {columnArray.map((column: string, idx: number) => {
-          return <Column key={idx} title={column}/>
+        {columnArray.map((category, idx) => {
+          return <Column key={idx} title={category}/>
         })}
       </ListsWrapper>
-      {modalStateSelector && <ModalAddNewTask closeModal={closeModal}/>}
+      {modalStateSelector && <ModalNewTask closeModal={closeModal}/>}
     </Wrapper>
   );
 }
@@ -49,6 +49,5 @@ const Wrapper = styled.div`
 
 const ListsWrapper = styled.ul`
     display: flex;  
-    justify-content: space-between;
     gap: 20px;
 `

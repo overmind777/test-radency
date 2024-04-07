@@ -39,14 +39,19 @@ export const createTaskThunk = createAsyncThunk <
   }
 )
 
-// export const removeTaskThunk = createAsyncThunk <string, string, AsyncThunkConfig>('removeTask',async (id, thunkAPI)=>{
-//   try{
-//
-//   } catch (error: unknown) {
-//   return thunkApi.rejectWithValue(
-//     `${(error as Error)?.message ?? "Unknown error"}`
-//   );
-// }})
+export const removeTaskThunk = createAsyncThunk <
+  number,
+  number,
+  AsyncThunkConfig
+>('removeTask',async (id, thunkApi)=>{
+  try{
+    await taskApi.delete(`/tasks/${id}`)
+    return id
+  } catch (error: unknown) {
+  return thunkApi.rejectWithValue(
+    `${(error as Error)?.message ?? "Unknown error"}`
+  );
+}})
 
 export const editTaskThunk = createAsyncThunk <
   Task,

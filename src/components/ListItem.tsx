@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import Item from './Item';
 import { Task, tasksSelector } from '../redux/taskSlice';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface Title {
   title: string;
 }
-const ListItem: React.FC<Title> = ({ title }) => {
+const ListItem = ({ title }: Title) => {
   const tasks = useSelector(tasksSelector);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
 

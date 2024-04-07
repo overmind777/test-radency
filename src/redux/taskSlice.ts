@@ -5,7 +5,7 @@ import {
   editTaskThunk,
 //   // createTaskThunk,
 //   // editTaskThunk,
-  getAllTasksThunk,
+  getAllTasksThunk, removeTaskThunk,
 //   // getTaskByIdThunk,
 //   // removeTaskThunk
 } from './operations.ts';
@@ -44,7 +44,11 @@ const taskSlice = createSlice({
       .addCase(createTaskThunk.fulfilled, (state, {payload})=>{
         state.tasks.push(payload)
       })
-      // .addCase(removeTaskThunk.fulfilled, (state, {payload})=>{})
+      .addCase(removeTaskThunk.fulfilled, (state, {payload})=>{
+        state.tasks = state.tasks.filter((task: Task) => {
+          return task.id !== payload;
+        })
+      })
       .addCase(editTaskThunk.fulfilled, (state, action)=>{
         const index = state.tasks.findIndex(task => task.id === action.payload.id);
         if (index !== -1) {

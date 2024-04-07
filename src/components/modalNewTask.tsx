@@ -8,12 +8,12 @@ import { AppDispatch } from '../redux/store.ts';
 import { createTaskThunk } from '../redux/operations.ts';
 
 
-const ModalAddNewTask = ({closeModal}: ModalInterface) => {
+const ModalNewTask = ({closeModal}: ModalInterface) => {
 
   const dispatch = useDispatch<AppDispatch>()
 
   const [titleValue,setTitleValue] = useState<string>("")
-  const [impotanceValue,setImpotanceValue] = useState<string>("")
+  const [impotanceValue,setImpotanceValue] = useState<string>("low")
   const [categoryValue,setCategoryValue] = useState<string>("")
   const [dateValue,setDateValue] = useState<string>("")
   const [descriptionValue, setDescriptionValue] = useState<string>("")
@@ -98,7 +98,7 @@ const ModalAddNewTask = ({closeModal}: ModalInterface) => {
   );
 };
 
-export default ModalAddNewTask;
+export default ModalNewTask;
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -132,7 +132,10 @@ const HeaderStyled = styled.header`
 `
 
 const SvgStyled = styled.svg`
-    
+    cursor: pointer;
+    &:hover{
+        fill: red;
+    }
 `
 
 const ContentWrapper = styled.div`

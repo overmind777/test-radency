@@ -13,7 +13,7 @@ const Column: React.FC<Text> = ({title}: Text) => {
 
   const dispatch = useDispatch<AppDispatch>()
 
-  const handleClicedAddNew = ()=>{
+  const handleClickedAddNew = ()=>{
     dispatch(modalState(true))
   }
 
@@ -24,7 +24,7 @@ const Column: React.FC<Text> = ({title}: Text) => {
         <h3>{title}</h3>
         <p></p>
       </TitleWrapper>
-      <Button onClick={handleClicedAddNew}>Add new card</Button>
+      <Button onClick={handleClickedAddNew}>Add new card</Button>
       <ListItem title={title}/>
     </Item>
   );

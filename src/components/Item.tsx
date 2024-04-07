@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { editTaskThunk } from '../redux/operations.ts';
 import { AppDispatch } from '../redux/store.ts';
-import React from 'react';
+import React, { useState } from 'react';
+import sprite from '../icon/sprite.svg';
+import ModalEditTask from './modalEditTask.tsx';
 
 interface ItemProps {
   item: Task;
 }
 
-// interface ImpTextStyledProps {
-//   color: string;
-// }
-
 const Item: React.FC<ItemProps> = ({ item }) => {
 
   const { id, title, description, date,  importance } = item;
   const dispatch = useDispatch<AppDispatch>()
+
+  const [isOpen, setIsOpen] = useState(false)
 
   const getImportanceColor = () => {
 
@@ -32,24 +32,33 @@ const Item: React.FC<ItemProps> = ({ item }) => {
     }
   }
 
-  const hendlerSelec = (e: React.ChangeEvent<HTMLSelectElement>)=>{
+  const hendleSelect = (e: React.ChangeEvent<HTMLSelectElement>)=>{
     dispatch(editTaskThunk({id, category: e.target.value}))
   }
 
+  const handleClick = ()=>{
+    setIsOpen(prev => !prev)
+  }
 
   return (
     <ItemStyled>
-      <TitleStyled>{title}</TitleStyled>
+      <TitleWrapper>
+        <TitleStyled>{title}</TitleStyled>
+        <SvgStyled width={16} height={16} onClick={handleClick}>
+          <use xlinkHref={`${sprite}#pencil`}></use>
+        </SvgStyled>
+      </TitleWrapper>
       <TextImportanceStyled color={getImportanceColor()}>{importance}</TextImportanceStyled>
       <TextStyled>{date}</TextStyled>
       <TextStyled>{description}</TextStyled>
-      <SelectStyled name="moveTo" id="moveTo" onChange={hendlerSelec}>
+      <SelectStyled name="moveTo" id="moveTo" onChange={hendleSelect}>
         <option value="0">Move to</option>
         <option value="todo">To Do</option>
         <option value="planned">Planned</option>
         <option value="inprogress">In Progress</option>
         <option value="closed">Closed</option>
       </SelectStyled>
+      {isOpen && <ModalEditTask idTask={id} click={handleClick}/> }
     </ItemStyled>
   );
 };
@@ -57,6 +66,7 @@ const Item: React.FC<ItemProps> = ({ item }) => {
 export default Item;
 
 const ItemStyled = styled.li`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -66,8 +76,16 @@ const ItemStyled = styled.li`
     border-radius: 5px;
   `
 
+const TitleWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+`
+
 const TitleStyled = styled.p`
-  font-size: 20px;
+    display: inline-block;
+    font-size: 20px;
     font-weight: bold;
 `
 
@@ -92,3 +110,10 @@ const TextImportanceStyled = styled.p`
 const SelectStyled = styled.select`
   width: 100%;
   `
+
+const SvgStyled = styled.svg`
+    cursor: pointer;
+    &:hover{
+        fill: red;
+    }
+`
