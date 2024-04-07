@@ -3,9 +3,14 @@ import React, { useState } from 'react';
 import { ModalInterface } from '../App.tsx';
 
 import sprite from '../icon/sprite.svg'
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store.ts';
+import { createTaskThunk } from '../redux/operations.ts';
 
 
 const ModalAddNewTask = ({closeModal}: ModalInterface) => {
+
+  const dispatch = useDispatch<AppDispatch>()
 
   const [titleValue,setTitleValue] = useState<string>("")
   const [impotanceValue,setImpotanceValue] = useState<string>("")
@@ -27,12 +32,19 @@ const ModalAddNewTask = ({closeModal}: ModalInterface) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
-    console.log(titleValue, impotanceValue, categoryValue, dateValue, descriptionValue)
+    dispatch(createTaskThunk({
+      title: titleValue,
+      importance: impotanceValue,
+      category: categoryValue,
+      date: dateValue,
+      description: descriptionValue,
+    }))
+    closeModal()
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    console.log(name, value)
+
     switch (name) {
       case 'taskName':
         setTitleValue(value);
@@ -65,13 +77,13 @@ const ModalAddNewTask = ({closeModal}: ModalInterface) => {
         <ContentWrapper>
           <FormStyled onSubmit={handleSubmit}>
             <LabelStyled htmlFor="taskName">Task name</LabelStyled>
-            <InputStyled name="taskName" id="taskName" type="text" placeholder="Enter name" value={titleValue} onChange={handleInputChange}/>
+            <InputStyled required name="taskName" id="taskName" type="text" placeholder="Enter name" value={titleValue} onChange={handleInputChange}/>
             <LabelStyled htmlFor="category">Category</LabelStyled>
-            <InputStyled name="category" id="category" type="text" placeholder="Enter category" value={categoryValue} onChange={handleInputChange}/>
+            <InputStyled required name="category" id="category" type="text" placeholder="Enter category" value={categoryValue} onChange={handleInputChange}/>
             <LabelStyled htmlFor="date">Date</LabelStyled>
-            <InputStyled name="date" id="date" type="date" placeholder="Enter date" value={dateValue} onChange={handleInputChange}/>
+            <InputStyled required name="date" id="date" type="date" placeholder="Enter date" value={dateValue} onChange={handleInputChange}/>
             <LabelStyled htmlFor="importance">Importance</LabelStyled>
-            <SelectStyled value={impotanceValue} onChange={handleInputChange}>
+            <SelectStyled name="importance" value={impotanceValue} onChange={handleInputChange}>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>

@@ -17,21 +17,28 @@ export interface Query {
   id?: number;
   title?: string;
   category?: string;
+  date?: string;
   description?: string;
   importance?: string;
 }
 
-// export const createTaskThunk = createAsyncThunk <string, { title: string, description: string }, AsyncThunkConfig>('createTask', async (task, thunkApi)=> {
-//     try {
-//       const {title, description} = task
-//     } catch (error: unknown) {
-//       return thunkApi.rejectWithValue(
-//         `${(error as Error)?.message ?? "Unknown error"}`
-//       );
-//     }
-//   }
-// )
-//
+export const createTaskThunk = createAsyncThunk <
+  Task,
+  Query,
+  AsyncThunkConfig
+>('createTask', async (task, thunkApi)=> {
+      // const {title, description, category, importance} = task
+    try {
+      const {data} = await taskApi.post('/tasks', task)
+      return data as Task
+    } catch (error: unknown) {
+      return thunkApi.rejectWithValue(
+        `${(error as Error)?.message ?? "Unknown error"}`
+      );
+    }
+  }
+)
+
 // export const removeTaskThunk = createAsyncThunk <string, string, AsyncThunkConfig>('removeTask',async (id, thunkAPI)=>{
 //   try{
 //

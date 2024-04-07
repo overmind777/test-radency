@@ -3,21 +3,23 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { editTaskThunk } from '../redux/operations.ts';
 import { AppDispatch } from '../redux/store.ts';
+import React from 'react';
 
 interface ItemProps {
   item: Task;
 }
 
-interface ImpTextStyledProps {
-  color: string;
-}
+// interface ImpTextStyledProps {
+//   color: string;
+// }
 
 const Item: React.FC<ItemProps> = ({ item }) => {
 
-  const { id, title, description, importance } = item;
+  const { id, title, description, date,  importance } = item;
   const dispatch = useDispatch<AppDispatch>()
 
   const getImportanceColor = () => {
+
     switch (importance) {
       case 'low':
         return 'green';
@@ -38,12 +40,9 @@ const Item: React.FC<ItemProps> = ({ item }) => {
   return (
     <ItemStyled>
       <TitleStyled>{title}</TitleStyled>
+      <TextImportanceStyled color={getImportanceColor()}>{importance}</TextImportanceStyled>
+      <TextStyled>{date}</TextStyled>
       <TextStyled>{description}</TextStyled>
-      <WrapperImportance>
-        <ImpTextStyled color={getImportanceColor()}>
-           {importance}
-        </ImpTextStyled>
-      </WrapperImportance>
       <SelectStyled name="moveTo" id="moveTo" onChange={hendlerSelec}>
         <option value="0">Move to</option>
         <option value="todo">To Do</option>
@@ -76,20 +75,15 @@ const TextStyled = styled.p`
   color: #9fa0ae;
 `
 
-const WrapperImportance = styled.div`
-    display: inline-block;
-    padding: 5px;
-  border-radius: 20px;
-    background-color: lightgray;
-  `
-
-const ImpTextStyled = styled.p<ImpTextStyledProps>`
+const TextImportanceStyled = styled.p`
+  color: #9fa0ae;
     &::before {
         content: '';
         display: inline-block;
         width: 10px; // Розмір кола
         height: 10px; // Розмір кола
         border-radius: 50%; // Зробити круглим
+        border: 1px solid black;
         background-color: ${props => props.color}; // Колір кола
         margin-right: 5px; // Відступ перед текстом
     }

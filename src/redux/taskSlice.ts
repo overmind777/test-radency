@@ -1,6 +1,7 @@
 
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import {
+  createTaskThunk,
   editTaskThunk,
 //   // createTaskThunk,
 //   // editTaskThunk,
@@ -14,6 +15,7 @@ export interface Task {
   id: number;
   title: string;
   category: string;
+  date: string;
   description: string;
   importance: 'low' | 'medium' | 'high';
 }
@@ -39,7 +41,9 @@ const taskSlice = createSlice({
   extraReducers:
   (builder) => {
     builder
-      // .addCase(createTaskThunk.fulfilled, (state, {payload})=>{})
+      .addCase(createTaskThunk.fulfilled, (state, {payload})=>{
+        state.tasks.push(payload)
+      })
       // .addCase(removeTaskThunk.fulfilled, (state, {payload})=>{})
       .addCase(editTaskThunk.fulfilled, (state, action)=>{
         const index = state.tasks.findIndex(task => task.id === action.payload.id);
