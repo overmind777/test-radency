@@ -3,14 +3,16 @@ import React, { useState } from 'react';
 import { ModalInterface } from '../App.tsx';
 
 import sprite from '../icon/sprite.svg'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../redux/store.ts';
 import { createTaskThunk } from '../redux/operations.ts';
+import { taskSelector } from '../redux/taskSlice.ts';
 
 
 const ModalNewTask = ({closeModal}: ModalInterface) => {
 
   const dispatch = useDispatch<AppDispatch>()
+  const taskStateSelector = useSelector(taskSelector)
 
   const [titleValue,setTitleValue] = useState<string>("")
   const [impotanceValue,setImpotanceValue] = useState<string>("low")
@@ -66,6 +68,7 @@ const ModalNewTask = ({closeModal}: ModalInterface) => {
     }
   };
 
+
   return (
     <Wrapper onClick={handleBackDrop}>
       <WrapperModal>
@@ -77,19 +80,19 @@ const ModalNewTask = ({closeModal}: ModalInterface) => {
         <ContentWrapper>
           <FormStyled onSubmit={handleSubmit}>
             <LabelStyled htmlFor="taskName">Task name</LabelStyled>
-            <InputStyled required name="taskName" id="taskName" type="text" placeholder="Enter name" value={titleValue} onChange={handleInputChange}/>
+            <InputStyled required name="taskName" id="taskName" type="text" placeholder="Enter name" value={taskStateSelector ? taskStateSelector[0]?.title : titleValue} onChange={handleInputChange}/>
             <LabelStyled htmlFor="category">Category</LabelStyled>
-            <InputStyled required name="category" id="category" type="text" placeholder="Enter category" value={categoryValue} onChange={handleInputChange}/>
+            <InputStyled required name="category" id="category" type="text" placeholder="Enter category" value={taskStateSelector ? taskStateSelector[0]?.category : categoryValue} onChange={handleInputChange}/>
             <LabelStyled htmlFor="date">Date</LabelStyled>
-            <InputStyled required name="date" id="date" type="date" placeholder="Enter date" value={dateValue} onChange={handleInputChange}/>
+            <InputStyled required name="date" id="date" type="date" placeholder="Enter date" value={taskStateSelector ? taskStateSelector[0]?.date : dateValue} onChange={handleInputChange}/>
             <LabelStyled htmlFor="importance">Importance</LabelStyled>
-            <SelectStyled name="importance" value={impotanceValue} onChange={handleInputChange}>
+            <SelectStyled name="importance" value={taskStateSelector ? taskStateSelector[0]?.importance : impotanceValue} onChange={handleInputChange}>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
             </SelectStyled>
             <LabelStyled htmlFor="description">Description</LabelStyled>
-            <TextAreaStyled name="description" id="description" placeholder="Enter description max length 300" rows={5} cols={50} maxLength={300} value={descriptionValue} onChange={handleInputChange}/>
+            <TextAreaStyled name="description" id="description" placeholder="Enter description max length 300" rows={5} cols={50} maxLength={300} value={taskStateSelector ? taskStateSelector[0]?.description : descriptionValue} onChange={handleInputChange}/>
             <ButtonStyled type="submit">Save</ButtonStyled>
           </FormStyled>
         </ContentWrapper>

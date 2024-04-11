@@ -2,7 +2,8 @@ import sprite from '../icon/sprite.svg';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store.ts';
-import { removeTaskThunk } from '../redux/operations.ts';
+import { getTaskByIdThunk, removeTaskThunk } from '../redux/operations.ts';
+import { modalState } from '../redux/taskSlice.ts';
 
 
 interface Open {
@@ -14,7 +15,9 @@ const ModalEditTask = ({idTask, click}: Open) => {
   const dispatch = useDispatch<AppDispatch>()
 
   const handleEditTask = ()=>{
-    console.log('edit')
+    dispatch(getTaskByIdThunk(idTask))
+    click()
+    dispatch(modalState(true))
   }
 
   const handleDeleteTask = ()=>{

@@ -7,16 +7,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllTasksThunk } from './redux/operations';
 import { AppDispatch } from './redux/store';
 import ModalNewTask from './components/modalNewTask.tsx';
-import { modalSelector, modalState} from './redux/taskSlice.ts';
+import { modalSelector, modalState } from './redux/taskSlice.ts';
 
 export interface ModalInterface {
+  children?: string[];
   closeModal: ()=> void;
 }
 
 function App() {
+
   const columnArray = ['To Do', 'Planned', 'In Progress', 'Closed']
   const dispatch = useDispatch<AppDispatch>()
   const modalStateSelector = useSelector(modalSelector)
+
 
 
   useEffect(() => {

@@ -69,11 +69,19 @@ export const editTaskThunk = createAsyncThunk <
   }
 })
 
-// export const getTaskByIdThunk = createAsyncThunk <AsyncThunkConfig>('getTaskById',async (id, thunkAPI)=>{try{}catch (error: unknown) {
-//   return thunkApi.rejectWithValue(
-//     `${(error as Error)?.message ?? "Unknown error"}`
-//   );
-// }})
+export const getTaskByIdThunk = createAsyncThunk <
+  Task,
+  number,
+  AsyncThunkConfig
+>('getTaskById',async (id, thunkApi)=>{
+  try{
+    const {data} = await taskApi.get(`/tasks/${id}`)
+    return data;
+  } catch (error: unknown) {
+  return thunkApi.rejectWithValue(
+    `${(error as Error)?.message ?? "Unknown error"}`
+  );
+}})
 
 export const getAllTasksThunk = createAsyncThunk<
   Task[],

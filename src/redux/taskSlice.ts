@@ -5,7 +5,7 @@ import {
   editTaskThunk,
 //   // createTaskThunk,
 //   // editTaskThunk,
-  getAllTasksThunk, removeTaskThunk,
+  getAllTasksThunk, getTaskByIdThunk, removeTaskThunk,
 //   // getTaskByIdThunk,
 //   // removeTaskThunk
 } from './operations.ts';
@@ -21,12 +21,14 @@ export interface Task {
 }
 
 interface TasksState {
-  tasks: Task[],
-  isOpen: boolean,
+  tasks: Task[];
+  task: Task[];
+  isOpen: boolean;
 }
 
 const initialState: TasksState = {
   tasks: [],
+  task: [],
   isOpen: false,
 }
 
@@ -55,7 +57,10 @@ const taskSlice = createSlice({
           state.tasks[index] = action.payload;
         }
       })
-      // .addCase(getTaskByIdThunk.fulfilled(), (state, {payload})=>{})
+      .addCase(getTaskByIdThunk.fulfilled, (state, action)=>{
+        console.log(action.payload)
+        state.task.push(action.payload)
+      })
       .addCase(getAllTasksThunk.fulfilled, (state, action: PayloadAction<Task[]>) => {
         state.tasks = action.payload || []
       })
@@ -65,4 +70,5 @@ const taskSlice = createSlice({
 export const tasksReducer: Reducer<TasksState> = taskSlice.reducer
 export const {modalState} = taskSlice.actions
 export const tasksSelector = (state: RootState) => state.tasks.tasks
+export const taskSelector = (state: RootState) => state.tasks.task
 export const modalSelector = (state: RootState) => state.tasks.isOpen
